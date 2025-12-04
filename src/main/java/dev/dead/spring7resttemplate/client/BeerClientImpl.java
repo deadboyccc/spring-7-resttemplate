@@ -6,16 +6,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.http.ResponseEntity;
+import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class BeerClientImpl implements BeerClient {
-    private final RestTemplate restTemplate;
+    private final RestTemplateBuilder restTemplateBuilder;
 
     @Override
     public Page<BeerDTO> listBeers() {
+        RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/beer",
                 String.class);
 
